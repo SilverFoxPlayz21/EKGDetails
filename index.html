@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EKG Details | Premium Ceramic Coating & Auto Care</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="google-site-verification" content="SuoVcV6Ck2mgNI4ACOhkFgKsRWWqfkajw_YhmeXbgYI" />
+    <title>EKG Car Detailing - Professional Car Painting Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             margin: 0;
@@ -14,15 +15,16 @@
         }
 
         :root {
-            --primary: #ff3333;
-            --primary-dark: #cc0000;
-            --dark: #0a0a0a;
-            --darker: #050505;
-            --gray: #1a1a1a;
-            --light-gray: #2a2a2a;
-            --text: #ffffff;
-            --text-gray: #888888;
-            --gold: #d4af37;
+            --primary: #D4AF37;
+            --primary-light: #F4E8C1;
+            --secondary: #C0C0C0;
+            --accent: #FFD700;
+            --dark: #0a0a1a;
+            --darker: #050510;
+            --navy: #0f172a;
+            --light: #ffffff;
+            --gray: #1a1a2e;
+            --gold-glow: rgba(212, 175, 55, 0.3);
         }
 
         html {
@@ -30,68 +32,69 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--darker);
+            color: var(--light);
             overflow-x: hidden;
         }
 
-        /* Language Toggle */
-        .lang-toggle {
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
-            top: 100px;
-            right: 30px;
-            z-index: 999;
-            background: rgba(26, 26, 26, 0.9);
-            border: 1px solid rgba(255, 51, 51, 0.3);
-            border-radius: 30px;
-            padding: 5px;
-            display: flex;
-            gap: 5px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--darker) 0%, #0f172a 50%, var(--dark) 100%);
         }
 
-        .lang-btn {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
-            color: var(--text-gray);
-            cursor: pointer;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(192, 192, 192, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
         }
 
-        .lang-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
-        .lang-btn:hover:not(.active) {
-            color: var(--primary);
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            .lang-toggle {
-                top: 80px;
-                right: 15px;
-            }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 15s infinite;
+            opacity: 0.6;
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--darker);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-            border-radius: 5px;
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
         /* Navigation */
@@ -99,14 +102,14 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 15px 5%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
+            padding: 15px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -116,33 +119,34 @@
             gap: 15px;
         }
 
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--text);
-            text-decoration: none;
+        .logo-img {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: logoGlow 2s ease-in-out infinite alternate;
         }
 
-        .logo-text span {
-            color: var(--primary);
+        @keyframes logoGlow {
+            from { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)); }
         }
 
         .nav-links {
             display: flex;
             gap: 40px;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--light);
             text-decoration: none;
+            font-size: 1.1rem;
             font-weight: 500;
-            font-size: 0.9rem;
+            position: relative;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.3s ease;
-            position: relative;
         }
 
         .nav-links a::after {
@@ -152,262 +156,212 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
+        .lang-toggle {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--light);
+            padding: 8px 20px;
+            border-radius: 30px;
             cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(10,10,10,0.9), rgba(10,10,10,0.7)), url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, var(--dark) 100%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 25px;
-            background: rgba(255, 51, 51, 0.15);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            border-radius: 50px;
-            animation: pulse 2s infinite;
-            font-weight: 600;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.4); }
-            50% { box-shadow: 0 0 0 15px rgba(255, 51, 51, 0); }
-        }
-
-        h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 16px 40px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border-radius: 5px;
+            font-weight: 700;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .btn::before {
+        .lang-toggle::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
             transition: left 0.5s ease;
         }
 
-        .btn:hover::before {
+        .lang-toggle:hover::before {
             left: 100%;
         }
 
-        .btn-primary {
+        .lang-toggle:hover {
             background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.3);
+            color: var(--dark);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            transform: scale(1.05);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 51, 51, 0.4);
-            background: var(--primary-dark);
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 50px;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-3px);
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            animation: heroText 1s ease-out;
         }
 
-        /* Floating Elements */
-        .floating-shapes {
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes heroText {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: heroText 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: heroText 1s ease-out 0.6s both;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
             position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
         }
 
-        .shape {
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Logo Big */
+        .hero-logo {
             position: absolute;
-            opacity: 0.1;
-            border: 2px solid var(--primary);
-            animation: float 20s infinite;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            max-width: 500px;
+            opacity: 0.15;
+            animation: carFloat 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
         }
 
-        .shape:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            top: 60%;
-            right: 10%;
-            width: 150px;
-            height: 150px;
-            animation-delay: 5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-100px) rotate(180deg); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 5%;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-header h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .section-header p {
-            color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .highlight {
-            color: var(--primary);
+        @keyframes carFloat {
+            0%, 100% { transform: translateY(-50%) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-50%) translateX(-20px) rotate(2deg); }
         }
 
         /* Services Section */
         .services {
-            background: var(--darker);
+            padding: 100px 50px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-light);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .service-card {
-            background: var(--gray);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
             padding: 40px;
-            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            transition: all 0.5s ease;
             cursor: pointer;
         }
 
@@ -417,462 +371,407 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: var(--primary);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(192, 192, 192, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .service-card:hover::before {
-            transform: scaleX(1);
+            opacity: 1;
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 51, 51, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
         }
 
         .service-icon {
             font-size: 3rem;
-            color: var(--primary);
             margin-bottom: 20px;
+            display: block;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
         }
 
         .service-card h3 {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             margin-bottom: 15px;
+            color: var(--primary);
         }
 
         .service-card p {
-            color: var(--text-gray);
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
-            margin-bottom: 20px;
         }
 
-        .service-features {
-            list-style: none;
-            margin-top: 20px;
+        /* Before/After Section */
+        .before-after-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.05), transparent);
         }
 
-        .service-features li {
-            padding: 8px 0;
-            color: var(--text-gray);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-        .service-features li i {
-            color: var(--primary);
-            font-size: 0.8rem;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--dark);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            max-width: 1400px;
+        .comparison-container {
+            max-width: 1000px;
             margin: 0 auto;
-        }
-
-        .about-image {
             position: relative;
             border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.3);
         }
 
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%);
-            transition: filter 0.3s ease;
-        }
-
-        .about-image:hover img {
-            filter: grayscale(0%);
-        }
-
-        .about-image::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: -20px;
-            bottom: -20px;
-            border: 2px solid var(--primary);
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .about-content h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .about-content p {
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .stat-item h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        .stat-item p {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        /* Booking Section */
-        .booking {
-            background: linear-gradient(135deg, var(--darker) 0%, var(--gray) 100%);
+        .comparison-slider {
             position: relative;
-            overflow: hidden;
-        }
-
-        .booking::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,51,51,0.05) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .booking-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 60px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 2;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            background: var(--light-gray);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 51, 51, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.3);
-        }
-
-        /* Location Section */
-        .location {
-            background: var(--darker);
-            padding-bottom: 0;
-        }
-
-        .location-content {
-            max-width: 1400px;
-            margin: 0 auto 60px;
-            text-align: center;
-        }
-
-        .map-container {
             width: 100%;
             height: 500px;
-            position: relative;
-            background: var(--gray);
             overflow: hidden;
         }
 
-        .map-container iframe {
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-            filter: grayscale(100%) invert(92%) contrast(1.2);
+            background-size: cover;
+            background-position: center;
         }
 
-        .location-card {
-            display: inline-flex;
+        .comparison-image.before {
+            background-image: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1000&q=80');
+            filter: grayscale(100%) contrast(1.2) brightness(0.7);
+            z-index: 1;
+        }
+
+        .comparison-image.after {
+            background-image: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1000&q=80');
+            z-index: 2;
+            width: 50%;
+            border-right: 3px solid var(--primary);
+            box-shadow: 5px 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: 4px solid var(--light);
+            border-radius: 50%;
+            z-index: 3;
+            cursor: ew-resize;
+            display: flex;
             align-items: center;
-            gap: 15px;
-            background: var(--gray);
-            padding: 20px 30px;
-            border-radius: 10px;
-            margin-top: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+            animation: handlePulse 2s ease-in-out infinite;
         }
 
-        .location-card i {
+        @keyframes handlePulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); }
+            50% { box-shadow: 0 0 50px rgba(212, 175, 55, 1); }
+        }
+
+        .slider-handle::before,
+        .slider-handle::after {
+            content: '‹';
+            color: var(--dark);
             font-size: 1.5rem;
-            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
         }
 
-        .location-card a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
+        .slider-handle::before {
+            left: 8px;
         }
 
-        .location-card a:hover {
-            color: var(--primary);
+        .slider-handle::after {
+            content: '›';
+            right: 8px;
         }
 
-        .directions-btn {
-            background: var(--primary);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 20px;
+        .labels {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .label {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
         }
 
-        .directions-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 51, 51, 0.3);
+        .label.before-label {
+            color: #888;
+        }
+
+        .label.after-label {
+            color: var(--primary);
+        }
+
+        /* Map Section */
+        .location-section {
+            padding: 100px 50px;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .address-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        .address-box:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .address-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .address-box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
         }
 
         /* Footer */
         footer {
-            background: var(--darker);
-            padding: 60px 5% 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.9));
+            padding: 80px 50px 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
         }
 
-        .footer-brand h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
             margin-bottom: 20px;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-brand h3 span {
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
             color: var(--primary);
         }
 
-        .footer-brand p {
-            color: var(--text-gray);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
+        .contact-icon {
             width: 40px;
             height: 40px;
-            background: var(--gray);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.2rem;
+            animation: iconGlow 2s ease-in-out infinite alternate;
         }
 
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            border-color: var(--primary);
+        @keyframes iconGlow {
+            from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+            to { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
         }
 
-        .footer-links h4 {
-            font-family: 'Orbitron', sans-serif;
+        .footer-logo {
+            height: 80px;
+            width: auto;
             margin-bottom: 20px;
-            color: var(--text);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: var(--text-gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-gray);
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 968px) {
-            .about {
-                grid-template-columns: 1fr;
-            }
-            
-            .about-image {
-                order: -1;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
         }
 
-        @media (max-width: 600px) {
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 30px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 20px;
+            }
+
+            .logo-img {
+                height: 45px;
+            }
+
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--dark);
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(10, 10, 26, 0.98);
                 flex-direction: column;
-                padding: 20px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                justify-content: center;
+                gap: 30px;
+                transition: right 0.3s ease;
+                border-left: 2px solid var(--primary);
             }
-            
+
             .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
                 display: flex;
             }
-            
-            .mobile-menu {
-                display: block;
+
+            .hero {
+                padding: 120px 20px;
             }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
+
+            .hero-logo {
+                display: none;
             }
-            
-            .stats {
-                grid-template-columns: 1fr;
-                text-align: center;
+
+            .services, .before-after-section, .location-section {
+                padding: 60px 20px;
             }
-            
+
+            .comparison-slider {
+                height: 300px;
+            }
+
+            #map {
+                height: 350px;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .booking-container {
-                padding: 30px;
-            }
-            
-            .location-card {
-                flex-direction: column;
                 text-align: center;
             }
-            
-            .directions-btn {
-                margin-left: 0;
-                margin-top: 15px;
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            .footer-logo {
+                margin: 0 auto 20px;
+                display: block;
             }
         }
 
@@ -883,11 +782,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark);
+            background: var(--darker);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             z-index: 9999;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
@@ -897,668 +796,365 @@
             visibility: hidden;
         }
 
+        .loader-logo {
+            height: 150px;
+            width: auto;
+            animation: loaderPulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
         .loader-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--text);
-            margin-bottom: 20px;
-        }
-
-        .loader-text span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
             color: var(--primary);
-        }
-
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 51, 51, 0.2);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid #22c55e;
-            color: #22c55e;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            margin-top: 20px;
+            letter-spacing: 3px;
         }
     </style>
 </head>
 <body>
-    <!-- Language Toggle -->
-    <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLanguage('en')" id="btn-en">EN</button>
-        <button class="lang-btn" onclick="setLanguage('bg')" id="btn-bg">BG</button>
-    </div>
-
     <!-- Loader -->
     <div class="loader" id="loader">
-        <div class="loader-text">EKG<span>DETAILS</span></div>
-        <div class="loader-spinner"></div>
+        <img src="logo.png" alt="EKG Car Detailing" class="loader-logo">
+        <div class="loader-text">EKG CAR DETAILING</div>
     </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
-        <a href="#" class="logo-text">
-            EKG<span>DETAILS</span>
-        </a>
+        <div class="logo-container">
+            <img src="logo.png" alt="EKG Car Detailing" class="logo-img">
+        </div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#home" data-key="nav_home">Home</a></li>
-            <li><a href="#services" data-key="nav_services">Services</a></li>
-            <li><a href="#about" data-key="nav_about">About</a></li>
-            <li><a href="#booking" data-key="nav_booking">Book Now</a></li>
-            <li><a href="#location" data-key="nav_location">Location</a></li>
+            <li><a href="#home" data-bg="Начало" data-en="Home">Home</a></li>
+            <li><a href="#services" data-bg="Услуги" data-en="Services">Services</a></li>
+            <li><a href="#gallery" data-bg="Галерия" data-en="Gallery">Gallery</a></li>
+            <li><a href="#location" data-bg="Локация" data-en="Location">Location</a></li>
+            <li><a href="#contact" data-bg="Контакти" data-en="Contact">Contact</a></li>
+            <li><button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">BG</button></li>
         </ul>
-        <div class="mobile-menu" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
+        <img src="logo.png" alt="EKG" class="hero-logo">
         <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-crown"></i> <span data-key="hero_badge">Premium Auto Care in Bozhurishte</span>
-            </div>
-            <h1 data-key="hero_title">Excellence in Every<br>Detail</h1>
-            <p class="hero-subtitle" data-key="hero_subtitle">
-                Professional ceramic coating, premium detailing, and custom paintjobs. 
-                We use only the highest quality materials to protect and transform your vehicle at 8th March Street 3.
-            </p>
-            <div class="cta-group">
-                <a href="#booking" class="btn btn-primary">
-                    <i class="fas fa-calendar-check"></i> <span data-key="btn_book">Book Appointment</span>
-                </a>
-                <a href="#services" class="btn btn-secondary">
-                    <i class="fas fa-play"></i> <span data-key="btn_services">Our Services</span>
-                </a>
-            </div>
+            <h1>
+                <span data-bg="ПРЕМИУМ" data-en="PREMIUM">PREMIUM</span>
+                <span data-bg="ДЕТЕЙЛИНГ & БОЯДИСВАНЕ" data-en="DETAILING & PAINTING">DETAILING & PAINTING</span>
+            </h1>
+            <p data-bg="Трансформирайте своя автомобил с прецизност и лукс" data-en="Transform your vehicle with precision and luxury">Transform your vehicle with precision and luxury</p>
+            <a href="#contact" class="cta-button" data-bg="СВЪРЖЕТЕ СЕ С НАС" data-en="CONTACT US">CONTACT US</a>
         </div>
     </section>
 
     <!-- Services Section -->
     <section class="services" id="services">
-        <div class="section-header reveal">
-            <h2 data-key="services_title">Our <span class="highlight">Services</span></h2>
-            <p data-key="services_subtitle">Comprehensive automotive care using industry-leading products and techniques</p>
-        </div>
-        
+        <h2 class="section-title reveal" data-bg="НАШИТЕ УСЛУГИ" data-en="OUR SERVICES">OUR SERVICES</h2>
         <div class="services-grid">
             <div class="service-card reveal">
-                <div class="service-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 data-key="service1_title">Ceramic Coating</h3>
-                <p data-key="service1_desc">Ultimate paint protection with nano-ceramic technology. Creates a permanent hydrophobic layer that repels water, dirt, and contaminants while providing UV protection.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> <span data-key="feat1_1">5+ Years Protection</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat1_2">Hydrophobic Surface</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat1_3">UV & Chemical Resistance</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat1_4">Enhanced Gloss Finish</span></li>
-                </ul>
+                <span class="service-icon">🎨</span>
+                <h3 data-bg="Пълно Боядисване" data-en="Full Car Painting">Full Car Painting</h3>
+                <p data-bg="Пълно пребоядисване на вашия автомобил с висококачествени бои и луксозни финиши." data-en="Complete repainting of your vehicle with premium quality paints and luxury finishes.">Complete repainting of your vehicle with premium quality paints and luxury finishes.</p>
             </div>
-
             <div class="service-card reveal">
-                <div class="service-icon">
-                    <i class="fas fa-spray-can"></i>
-                </div>
-                <h3 data-key="service2_title">Custom Paintjobs</h3>
-                <p data-key="service2_desc">Professional automotive painting and refinishing. From full color changes to custom designs and high-quality clear coat finishes using premium materials.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> <span data-key="feat2_1">Premium Paint Brands</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat2_2">Perfect Color Matching</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat2_3">Custom Graphics & Designs</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat2_4">Clear Coat Protection</span></li>
-                </ul>
+                <span class="service-icon">🔧</span>
+                <h3 data-bg="Частичен Ремонт" data-en="Partial Repair">Partial Repair</h3>
+                <p data-bg="Целенасочен ремонт на повредени участъци и боядисване на отделни панели." data-en="Targeted repair of damaged areas and painting of individual panels.">Targeted repair of damaged areas and painting of individual panels.</p>
             </div>
-
             <div class="service-card reveal">
-                <div class="service-icon">
-                    <i class="fas fa-car-wash"></i>
-                </div>
-                <h3 data-key="service3_title">Premium Detailing</h3>
-                <p data-key="service3_desc">Interior and exterior deep cleaning and restoration. We bring your vehicle back to showroom condition using professional-grade equipment and products.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> <span data-key="feat3_1">Interior Deep Clean</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat3_2">Paint Correction</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat3_3">Leather Treatment</span></li>
-                    <li><i class="fas fa-check"></i> <span data-key="feat3_4">Engine Bay Detailing</span></li>
-                </ul>
+                <span class="service-icon">✨</span>
+                <h3 data-bg="Полиране" data-en="Polishing">Polishing</h3>
+                <p data-bg="Професионално полиране за възстановяване на блясъка и премахване на дефекти." data-en="Professional polishing to restore shine and remove defects.">Professional polishing to restore shine and remove defects.</p>
+            </div>
+            <div class="service-card reveal">
+                <span class="service-icon">🛡️</span>
+                <h3 data-bg="Керамично Покритие" data-en="Ceramic Coating">Ceramic Coating</h3>
+                <p data-bg="Защитно керамично покритие за дълготрайна защита на боята." data-en="Protective ceramic coating for long-lasting paint protection.">Protective ceramic coating for long-lasting paint protection.</p>
+            </div>
+            <div class="service-card reveal">
+                <span class="service-icon">🚗</span>
+                <h3 data-bg="Възстановяване на Боя" data-en="Paint Restoration">Paint Restoration</h3>
+                <p data-bg="Възстановяване на избледняла и окислена боя до заводско състояние." data-en="Restoration of faded and oxidized paint to factory condition.">Restoration of faded and oxidized paint to factory condition.</p>
+            </div>
+            <div class="service-card reveal">
+                <span class="service-icon">🎯</span>
+                <h3 data-bg="Цветно Подготвяне" data-en="Color Matching">Color Matching</h3>
+                <p data-bg="Прецизно смесване на цветове за перфектно съвпадение с оригиналната боя." data-en="Precise color mixing for perfect matching with original paint.">Precise color mixing for perfect matching with original paint.</p>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-content reveal">
-            <h2 data-key="about_title">Crafting Automotive<br><span class="highlight">Excellence</span></h2>
-            <p data-key="about_p1">Located in the heart of Bozhurishte at 8th March Street 3, EKG Details has been serving the Sofia region with premium automotive services. We combine technical expertise with passion for perfection.</p>
-            <p data-key="about_p2">Our commitment to using only great quality materials ensures that every vehicle leaving our shop meets the highest standards of protection and aesthetics. Whether it's a daily driver or a luxury exotic, we treat every car with the same level of dedication.</p>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <h4>500+</h4>
-                    <p data-key="stat1">Cars Protected</p>
-                </div>
-                <div class="stat-item">
-                    <h4>5+</h4>
-                    <p data-key="stat2">Years Experience</p>
-                </div>
-                <div class="stat-item">
-                    <h4>100%</h4>
-                    <p data-key="stat3">Quality Guarantee</p>
+    <!-- Before/After Section -->
+    <section class="before-after-section" id="gallery">
+        <h2 class="section-title reveal" data-bg="ПРЕДИ И СЛЕД" data-en="BEFORE & AFTER">BEFORE & AFTER</h2>
+        <div class="comparison-container reveal">
+            <div class="comparison-slider" id="comparisonSlider">
+                <div class="comparison-image before"></div>
+                <div class="comparison-image after" id="afterImage"></div>
+                <div class="slider-handle" id="sliderHandle"></div>
+                <div class="labels">
+                    <span class="label before-label" data-bg="ПРЕДИ" data-en="BEFORE">BEFORE</span>
+                    <span class="label after-label" data-bg="СЛЕД" data-en="AFTER">AFTER</span>
                 </div>
             </div>
-            
-            <a href="#booking" class="btn btn-primary" style="margin-top: 30px;">
-                <span data-key="btn_start">Get Started</span> <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-        <div class="about-image reveal">
-            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Professional Auto Detailing">
-        </div>
-    </section>
-
-    <!-- Booking Section -->
-    <section class="booking" id="booking">
-        <div class="section-header reveal">
-            <h2 data-key="booking_title">Book Your <span class="highlight">Appointment</span></h2>
-            <p data-key="booking_subtitle">Schedule your service online. We'll confirm your booking within 24 hours.</p>
-        </div>
-        
-        <div class="booking-container reveal">
-            <div class="success-message" id="successMessage">
-                <i class="fas fa-check-circle"></i> <span data-key="success_msg">Thank you! Your booking request has been sent successfully. We'll contact you soon!</span>
-            </div>
-            
-            <form id="bookingForm" action="https://formspree.io/f/xjgonnzk" method="POST">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name" data-key="label_name">Full Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" data-key="label_phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="0876605994">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email" data-key="label_email">Email Address *</label>
-                        <input type="email" id="email" name="email" required placeholder="ermalbmw1231@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="service" data-key="label_service">Select Service *</label>
-                        <select id="service" name="service" required>
-                            <option value="" data-key="select_service">Choose a service...</option>
-                            <option value="ceramic-coating" data-key="opt_ceramic">Ceramic Coating</option>
-                            <option value="detailing" data-key="opt_detailing">Premium Detailing</option>
-                            <option value="paintjob" data-key="opt_paint">Custom Paintjob</option>
-                            <option value="combo" data-key="opt_combo">Full Package (Coating + Detailing)</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="car" data-key="label_car">Car Model & Year *</label>
-                    <input type="text" id="car" name="car_model" required placeholder="BMW M3 2020">
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="date" data-key="label_date">Preferred Date *</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="time" data-key="label_time">Preferred Time *</label>
-                        <select id="time" name="time" required>
-                            <option value="" data-key="select_time">Select time...</option>
-                            <option value="09:00">09:00 AM</option>
-                            <option value="11:00">11:00 AM</option>
-                            <option value="14:00">02:00 PM</option>
-                            <option value="16:00">04:00 PM</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message" data-key="label_notes">Additional Notes</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Tell us about any specific requirements or damage that needs attention..."></textarea>
-                </div>
-                
-                <input type="hidden" name="_subject" value="New Booking Request - EKG Details">
-                
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i> <span data-key="btn_submit">Request Booking</span>
-                </button>
-            </form>
         </div>
     </section>
 
     <!-- Location Section -->
-    <section class="location" id="location">
-        <div class="location-content reveal">
-            <h2 data-key="location_title">Find Us in <span class="highlight">Bozhurishte</span></h2>
-            <p data-key="location_subtitle">Conveniently located at 8th March Street 3, just minutes from Sofia</p>
-            
-            <div class="location-card">
-                <i class="fas fa-map-marker-alt"></i>
-                <div>
-                    <strong>EKG Details</strong><br>
-                    <a href="https://maps.google.com/?q=42.7614,23.1986" target="_blank" rel="noopener noreferrer">
-                        8th March Street 3, Bozhurishte, Bulgaria
-                    </a>
-                </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=42.7614,23.1986" target="_blank" rel="noopener noreferrer" class="directions-btn">
-                    <i class="fas fa-location-arrow"></i> <span data-key="btn_directions">Get Directions</span>
-                </a>
-            </div>
-        </div>
-        
-        <div class="map-container">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.8!2d23.1986!3d42.7614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDQ1JzQxLjAiTiAyM8KwMTEnNTUuMCJF!5e0!3m2!1sen!2sbg!4v1234567890!5m2!1sen!2sbg" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+    <section class="location-section" id="location">
+        <h2 class="section-title reveal" data-bg="НАШАТА ЛОКАЦИЯ" data-en="OUR LOCATION">OUR LOCATION</h2>
+        <div id="map" class="reveal"></div>
+        <div class="address-box reveal">
+            <h3 data-bg="Адрес" data-en="Address">Address</h3>
+            <p>📍 3 Osmi Mart Street, Bozhurishte, Bulgaria</p>
+            <p data-bg="Работно време: Пон-Пет 9:00-18:00" data-en="Working Hours: Mon-Fri 9:00-18:00">Working Hours: Mon-Fri 9:00-18:00</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
-            <div class="footer-brand">
-                <h3>EKG<span>DETAILS</span></h3>
-                <p data-key="footer_desc">Premium automotive care in Bozhurishte. We treat every vehicle like it's our own, using only the highest quality materials and techniques.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="tel:0876605994" aria-label="Phone"><i class="fas fa-phone"></i></a>
+            <div class="footer-section">
+                <img src="logo.png" alt="EKG Car Detailing" class="footer-logo">
+                <p data-bg="Професионален детайлинг и боядисване на автомобили в Божурище." data-en="Professional car detailing and painting services in Bozhurishte.">Professional car detailing and painting services in Bozhurishte.</p>
+            </div>
+            <div class="footer-section">
+                <h3 data-bg="Контакти" data-en="Contact">Contact</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <p data-bg="Телефон" data-en="Phone">Phone</p>
+                        <a href="tel:+359876605994">087 660 5994</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <p>Email</p>
+                        <a href="mailto:ermalbmw1231@gmail.com">ermalbmw1231@gmail.com</a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="footer-links">
-                <h4 data-key="footer_services">Services</h4>
-                <ul>
-                    <li><a href="#services" data-key="nav_ceramic">Ceramic Coating</a></li>
-                    <li><a href="#services" data-key="nav_detailing">Auto Detailing</a></li>
-                    <li><a href="#services" data-key="nav_paint">Custom Paintjobs</a></li>
-                    <li><a href="#services" data-key="nav_protection">Paint Protection</a></li>
-                </ul>
+            <div class="footer-section">
+                <h3 data-bg="Бързи Връзки" data-en="Quick Links">Quick Links</h3>
+                <p><a href="#services" data-bg="Услуги" data-en="Services">Services</a></p>
+                <p><a href="#gallery" data-bg="Галерия" data-en="Gallery">Gallery</a></p>
+                <p><a href="#location" data-bg="Локация" data-en="Location">Location</a></p>
             </div>
-            
-            <div class="footer-links">
-                <h4 data-key="footer_company">Company</h4>
-                <ul>
-                    <li><a href="#about" data-key="nav_about_us">About Us</a></li>
-                    <li><a href="#location" data-key="nav_loc">Location</a></li>
-                    <li><a href="#booking" data-key="nav_book">Book Now</a></li>
-                    <li><a href="#" data-key="nav_gallery">Gallery</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4 data-key="footer_contact">Contact</h4>
-                <ul>
-                    <li><a href="https://maps.google.com/?q=42.7614,23.1986" target="_blank">8th March St 3, Bozhurishte</a></li>
-                    <li><a href="tel:0876605994">0876605994</a></li>
-                    <li><a href="mailto:ermalbmw1231@gmail.com">ermalbmw1231@gmail.com</a></li>
-                    <li data-key="footer_hours">Mon-Sat: 9:00 - 18:00</li>
-                </ul>
+            <div class="footer-section">
+                <h3 data-bg="Социални Мрежи" data-en="Social Media">Social Media</h3>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">TikTok</a></p>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <p>&copy; 2024 EKG Details. <span data-key="footer_rights">All rights reserved.</span></p>
-            <i class="fas fa-heart" style="color: var(--primary);"></i>
-            <p data-key="footer_crafted">Crafted with passion in Bozhurishte</p>
+            <p>&copy; 2026 EKG Car Detailing. <span data-bg="Всички права запазени." data-en="All rights reserved.">All rights reserved.</span></p>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Translations
-        const translations = {
-            en: {
-                nav_home: "Home",
-                nav_services: "Services",
-                nav_about: "About",
-                nav_booking: "Book Now",
-                nav_location: "Location",
-                hero_badge: "Premium Auto Care in Bozhurishte",
-                hero_title: "Excellence in Every<br>Detail",
-                hero_subtitle: "Professional ceramic coating, premium detailing, and custom paintjobs. We use only the highest quality materials to protect and transform your vehicle at 8th March Street 3.",
-                btn_book: "Book Appointment",
-                btn_services: "Our Services",
-                services_title: "Our ",
-                services_subtitle: "Comprehensive automotive care using industry-leading products and techniques",
-                service1_title: "Ceramic Coating",
-                service1_desc: "Ultimate paint protection with nano-ceramic technology. Creates a permanent hydrophobic layer that repels water, dirt, and contaminants while providing UV protection.",
-                feat1_1: "5+ Years Protection",
-                feat1_2: "Hydrophobic Surface",
-                feat1_3: "UV & Chemical Resistance",
-                feat1_4: "Enhanced Gloss Finish",
-                service2_title: "Custom Paintjobs",
-                service2_desc: "Professional automotive painting and refinishing. From full color changes to custom designs and high-quality clear coat finishes using premium materials.",
-                feat2_1: "Premium Paint Brands",
-                feat2_2: "Perfect Color Matching",
-                feat2_3: "Custom Graphics & Designs",
-                feat2_4: "Clear Coat Protection",
-                service3_title: "Premium Detailing",
-                service3_desc: "Interior and exterior deep cleaning and restoration. We bring your vehicle back to showroom condition using professional-grade equipment and products.",
-                feat3_1: "Interior Deep Clean",
-                feat3_2: "Paint Correction",
-                feat3_3: "Leather Treatment",
-                feat3_4: "Engine Bay Detailing",
-                about_title: "Crafting Automotive<br>",
-                about_p1: "Located in the heart of Bozhurishte at 8th March Street 3, EKG Details has been serving the Sofia region with premium automotive services. We combine technical expertise with passion for perfection.",
-                about_p2: "Our commitment to using only great quality materials ensures that every vehicle leaving our shop meets the highest standards of protection and aesthetics. Whether it's a daily driver or a luxury exotic, we treat every car with the same level of dedication.",
-                stat1: "Cars Protected",
-                stat2: "Years Experience",
-                stat3: "Quality Guarantee",
-                btn_start: "Get Started",
-                booking_title: "Book Your ",
-                booking_subtitle: "Schedule your service online. We'll confirm your booking within 24 hours.",
-                success_msg: "Thank you! Your booking request has been sent successfully. We'll contact you soon!",
-                label_name: "Full Name *",
-                label_phone: "Phone Number *",
-                label_email: "Email Address *",
-                label_service: "Select Service *",
-                label_car: "Car Model & Year *",
-                label_date: "Preferred Date *",
-                label_time: "Preferred Time *",
-                label_notes: "Additional Notes",
-                select_service: "Choose a service...",
-                opt_ceramic: "Ceramic Coating",
-                opt_detailing: "Premium Detailing",
-                opt_paint: "Custom Paintjob",
-                opt_combo: "Full Package (Coating + Detailing)",
-                select_time: "Select time...",
-                btn_submit: "Request Booking",
-                location_title: "Find Us in ",
-                location_subtitle: "Conveniently located at 8th March Street 3, just minutes from Sofia",
-                btn_directions: "Get Directions",
-                footer_desc: "Premium automotive care in Bozhurishte. We treat every vehicle like it's our own, using only the highest quality materials and techniques.",
-                footer_services: "Services",
-                nav_ceramic: "Ceramic Coating",
-                nav_detailing: "Auto Detailing",
-                nav_paint: "Custom Paintjobs",
-                nav_protection: "Paint Protection",
-                footer_company: "Company",
-                nav_about_us: "About Us",
-                nav_loc: "Location",
-                nav_book: "Book Now",
-                nav_gallery: "Gallery",
-                footer_contact: "Contact",
-                footer_hours: "Mon-Sat: 9:00 - 18:00",
-                footer_rights: "All rights reserved.",
-                footer_crafted: "Crafted with passion in Bozhurishte"
-            },
-            bg: {
-                nav_home: "Начало",
-                nav_services: "Услуги",
-                nav_about: "За Нас",
-                nav_booking: "Запази Час",
-                nav_location: "Локация",
-                hero_badge: "Премиум Авто Грижа в Божурище",
-                hero_title: "Съвършенство във<br>Всяка Детайл",
-                hero_subtitle: "Професионално керамично покритие, премиум детайлинг и боядисване. Използваме само най-висококачествени материали за защита и трансформация на вашия автомобил на ул. 8-ми Март 3.",
-                btn_book: "Запази Час",
-                btn_services: "Нашите Услуги",
-                services_title: "Нашите ",
-                services_subtitle: "Цялостна автомобилна грижа с водещи в индустрията продукти и техники",
-                service1_title: "Керамично Покритие",
-                service1_desc: "Максимална защита на боята с нано-керамична технология. Създава постоянен хидрофобен слой, който отблъсква вода, мръсотия и замърсители, осигурявайки UV защита.",
-                feat1_1: "5+ Години Защита",
-                feat1_2: "Хидрофобна Повърхност",
-                feat1_3: "UV и Химическа Устойчивост",
-                feat1_4: "Подобрен Гланц",
-                service2_title: "Боядисване",
-                service2_desc: "Професионално боядисване и възстановяване на автомобили. От пълна смяна на цвета до персонализирани дизайни и висококачествени лакови покрития с премиум материали.",
-                feat2_1: "Премиум Бои",
-                feat2_2: "Перфектно Съвпадение на Цвета",
-                feat2_3: "Персонализирани Графики",
-                feat2_4: "Лаково Покритие",
-                service3_title: "Премиум Детайлинг",
-                service3_desc: "Дълбоко почистване и възстановяване на интериор и екстериор. Връщаме вашия автомобил в заводско състояние с професионално оборудване и продукти.",
-                feat3_1: "Дълбоко Почистване на Интериор",
-                feat3_2: "Корекция на Боята",
-                feat3_3: "Третиране на Кожа",
-                feat3_4: "Детайлинг на Двигател",
-                about_title: "Създаване на Автомобилно<br>",
-                about_p1: "Разположени в сърцето на Божурище на ул. 8-ми Март 3, EKG Details обслужва региона на София с премиум автомобилни услуги. Комбинираме техническа експертиза със страст към съвършенството.",
-                about_p2: "Нашият ангажимент да използваме само висококачествени материали гарантира, че всеки автомобил, напускащ нашия сервиз, отговаря на най-високите стандарти за защита и естетика. Независимо дали е ежедневна кола или луксозен екзотичен автомобил, третираме всяка кола с еднакво ниво на отдаденост.",
-                stat1: "Защитени Коли",
-                stat2: "Години Опит",
-                stat3: "Гаранция за Качество",
-                btn_start: "Започни Сега",
-                booking_title: "Запази Своя ",
-                booking_subtitle: "Планирайте вашата услуга онлайн. Ще потвърдим резервацията ви до 24 часа.",
-                success_msg: "Благодарим ви! Вашата заявка за резервация е изпратена успешно. Ще се свържем с вас скоро!",
-                label_name: "Три Имена *",
-                label_phone: "Телефонен Номер *",
-                label_email: "Имейл Адрес *",
-                label_service: "Изберете Услуга *",
-                label_car: "Модел и Година на Кола *",
-                label_date: "Предпочитана Дата *",
-                label_time: "Предпочитан Час *",
-                label_notes: "Допълнителни Бележки",
-                select_service: "Изберете услуга...",
-                opt_ceramic: "Керамично Покритие",
-                opt_detailing: "Премиум Детайлинг",
-                opt_paint: "Боядисване",
-                opt_combo: "Пълен Пакет (Покритие + Детайлинг)",
-                select_time: "Изберете час...",
-                btn_submit: "Заяви Резервация",
-                location_title: "Намерете Ни в ",
-                location_subtitle: "Удобно разположени на ул. 8-ми Март 3, на минути от София",
-                btn_directions: "Упътвания",
-                footer_desc: "Премиум автомобилна грижа в Божурище. Третираме всеки автомобил като свой собствен, използвайки само най-висококачествени материали и техники.",
-                footer_services: "Услуги",
-                nav_ceramic: "Керамично Покритие",
-                nav_detailing: "Авто Детайлинг",
-                nav_paint: "Боядисване",
-                nav_protection: "Защита на Боята",
-                footer_company: "Компания",
-                nav_about_us: "За Нас",
-                nav_loc: "Локация",
-                nav_book: "Запази Час",
-                nav_gallery: "Галерия",
-                footer_contact: "Контакти",
-                footer_hours: "Пон-Съб: 9:00 - 18:00",
-                footer_rights: "Всички права запазени.",
-                footer_crafted: "Създадено със страст в Божурище"
-            }
-        };
-
-        let currentLang = localStorage.getItem('language') || 'en';
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            
-            // Update buttons
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-bg').classList.toggle('active', lang === 'bg');
-            
-            // Update all elements with data-key
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if (translations[lang][key]) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else if (element.tagName === 'OPTION') {
-                        element.textContent = translations[lang][key];
-                    } else {
-                        element.innerHTML = translations[lang][key];
-                    }
-                }
-            });
-            
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
-        }
-
-        // Initialize language on load
+        // Language State
+        let currentLang = 'en';
+        
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            setLanguage(currentLang);
-        });
-
-        // Remove loader when page loads
-        window.addEventListener('load', () => {
+            // Hide loader
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
-            }, 1000);
+            }, 2000);
+
+            // Create particles
+            createParticles();
+            
+            // Initialize map
+            initMap();
+            
+            // Initialize slider
+            initSlider();
+            
+            // Scroll animations
+            initScrollAnimations();
+            
+            // Mobile menu
+            initMobileMenu();
+            
+            // Smooth scroll for nav links
+            initSmoothScroll();
         });
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                
+                // Random colors - gold and silver theme
+                const colors = ['#D4AF37', '#C0C0C0', '#FFD700'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${particle.style.background}`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize Map
+        function initMap() {
+            const map = L.map('map').setView([42.76157002355617, 23.19534729012348], 15);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Custom icon with gold styling
+            const customIcon = L.divIcon({
+                className: 'custom-marker',
+                html: '<div style="background: linear-gradient(135deg, #D4AF37, #FFD700); width: 50px; height: 50px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); display: flex; align-items: center; justify-content: center; font-size: 24px;">🚗</div>',
+                iconSize: [50, 50],
+                iconAnchor: [25, 50]
+            });
+
+            L.marker([42.76157002355617, 23.19534729012348], { icon: customIcon })
+                .addTo(map)
+                .bindPopup('<b style="color: #D4AF37;">EKG Car Detailing</b><br>3 Osmi Mart Street<br>Bozhurishte, Bulgaria')
+                .openPopup();
+        }
+
+        // Before/After Slider
+        function initSlider() {
+            const slider = document.getElementById('comparisonSlider');
+            const afterImage = document.getElementById('afterImage');
+            const handle = document.getElementById('sliderHandle');
+            let isDragging = false;
+
+            function updateSlider(x) {
+                const rect = slider.getBoundingClientRect();
+                let percentage = ((x - rect.left) / rect.width) * 100;
+                percentage = Math.max(0, Math.min(100, percentage));
+                
+                afterImage.style.width = percentage + '%';
+                handle.style.left = percentage + '%';
+            }
+
+            handle.addEventListener('mousedown', () => isDragging = true);
+            document.addEventListener('mouseup', () => isDragging = false);
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) updateSlider(e.clientX);
+            });
+
+            // Touch support
+            handle.addEventListener('touchstart', () => isDragging = true);
+            document.addEventListener('touchend', () => isDragging = false);
+            document.addEventListener('touchmove', (e) => {
+                if (isDragging) updateSlider(e.touches[0].clientX);
+            });
+
+            slider.addEventListener('click', (e) => updateSlider(e.clientX));
+        }
+
+        // Scroll Animations
+        function initScrollAnimations() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOnScroll = () => {
+                reveals.forEach(element => {
+                    const windowHeight = window.innerHeight;
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < windowHeight - elementVisible) {
+                        element.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Check on load
+        }
+
+        // Mobile Menu
+        function initMobileMenu() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const nav = document.getElementById('navLinks');
+            
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+
+            // Close menu when clicking links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        }
+
+        // Smooth Scroll
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Language Toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'bg' : 'en';
+            document.getElementById('langBtn').textContent = currentLang === 'en' ? 'BG' : 'EN';
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-bg][data-en]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = el.getAttribute('data-' + currentLang);
+                } else {
+                    el.textContent = el.getAttribute('data-' + currentLang);
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = currentLang;
+        }
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.style.padding = '10px 5%';
-                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 26, 0.95)';
+                navbar.style.padding = '10px 50px';
             } else {
-                navbar.style.padding = '15px 5%';
-                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+                navbar.style.background = 'rgba(10, 10, 26, 0.9)';
+                navbar.style.padding = '15px 50px';
             }
         });
-
-        // Scroll reveal animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-        // Form handling with Formspree
-        const form = document.getElementById('bookingForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const successMessage = document.getElementById('successMessage');
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Show loading state
-            const originalText = submitBtn.innerHTML;
-            const loadingText = currentLang === 'bg' ? '<i class="fas fa-spinner fa-spin"></i> Изпращане...' : '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            submitBtn.innerHTML = loadingText;
-            submitBtn.disabled = true;
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    // Show success message
-                    successMessage.style.display = 'block';
-                    form.reset();
-                    
-                    // Scroll to success message
-                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
-                    // Reset button after 5 seconds
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                        successMessage.style.display = 'none';
-                    }, 5000);
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                // Fallback for errors
-                const errorText = currentLang === 'bg' ? '<i class="fas fa-exclamation-triangle"></i> Грешка - Опитайте Отново' : '<i class="fas fa-exclamation-triangle"></i> Error - Try Again';
-                submitBtn.innerHTML = errorText;
-                submitBtn.style.background = '#ef4444';
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.disabled = false;
-                }, 3000);
-            }
-        });
-
-        // Set minimum date to today
-        const dateInput = document.getElementById('date');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
-        });
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
     </script>
 </body>
 </html>
